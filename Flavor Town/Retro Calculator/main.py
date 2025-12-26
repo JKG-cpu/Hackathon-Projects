@@ -8,8 +8,12 @@ class Game:
         pygame.display.set_caption("Retro Calculator")
 
         self.font = pygame.font.Font(join("Flavor Town", "Retro Calculator", "fonts", "BoldPixels.ttf"), 20)
+        self.output_font = pygame.font.Font(join("Flavor Town", "Retro Calculator", "fonts", "BoldPixels.ttf"), 25)
 
-        self.number_pad = NumPad(self.font)
+        self.number_pad = NumPad(self.font, self.output_font)
+        self.number_slots = self.number_pad.get_number_slots()
+
+        self.calc = Calc()
 
     def run(self):
         while True:
@@ -21,6 +25,10 @@ class Game:
                     close_game()
             
             self.number_pad.draw()
+            self.calc.update(self.number_slots)
+
+            # Update Output
+            self.number_pad.reset_output(self.calc.get_equation())
 
             pygame.display.update()
 
