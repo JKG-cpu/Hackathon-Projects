@@ -5,11 +5,17 @@ class Calc:
         self.equation = ""
         self.eval_equation = ""
         self.answer = ""
+        self.display_message = False
+
+    def reset_display_message(self) -> None:
+        self.display_message = False
 
     def get_equation(self) -> str:
         return self.equation
 
     def solve(self, equation: str):
+        self.display_message = True
+        
         try:
             return str(eval(equation))
         except Exception:

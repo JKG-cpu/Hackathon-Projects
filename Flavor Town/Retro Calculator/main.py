@@ -14,6 +14,7 @@ class Game:
         self.number_slots = self.number_pad.get_number_slots()
 
         self.calc = Calc()
+        self.MMGenerator = MMGenerator(join("Flavor Town", "Retro Calculator", "data", "messages.txt"))
 
     def run(self):
         while True:
@@ -23,12 +24,22 @@ class Game:
                     pygame.quit()
                     cc()
                     close_game()
+                
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        pygame.quit()
+                        cc()
+                        close_game()
             
             self.number_pad.draw()
             self.calc.update(self.number_slots)
 
             # Update Output
             self.number_pad.reset_output(self.calc.get_equation())
+
+            if self.calc.display_message:
+                print(self.MMGenerator.get_random_quote())
+                self.calc.reset_display_message()
 
             pygame.display.update()
 
